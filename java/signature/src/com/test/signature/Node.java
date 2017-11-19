@@ -44,6 +44,6 @@ public class Node {
 	}
 
 	public String toString() {
-		return "";
+		return super.toString() + "[" + _childs.size() + " childs]";
 	}
 }
