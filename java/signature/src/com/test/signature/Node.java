@@ -43,6 +43,15 @@ public class Node {
 		return _parent;
 	}
 
+	public boolean isParentFirstChild() {
+		return (_parent != null && _parent.getChilds().indexOf(this) == 0);
+	}
+
+	public boolean isParentLastChild() {
+		return (_parent != null && _parent.getChilds().lastIndexOf(this) == _parent.getChilds().size() - 1);
+	}
+
+	@Override
 	public String toString() {
 		return super.toString() + "[" + _childs.size() + " childs]";
 	}

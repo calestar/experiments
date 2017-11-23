@@ -18,11 +18,11 @@ public class Type {
 	public String getTypename() {
 		return _typename;
 	}
-	
+
 	public boolean isArray() {
 		return _type_is_array;
 	}
-	
+
 	public void updateTypeName(String new_typename) {
 		_typename = new_typename;
 	}

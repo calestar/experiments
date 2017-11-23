@@ -8,11 +8,18 @@ public abstract class AbstractVisitor {
 		this._depth_first = depth_first;
 	}
 
-	void visit(Node node) {
+	public void visit(Node node) {
+		onVisitStart(node);
+		_visit(node);
+		onVisitEnd();
+	}
+
+	private void _visit(Node node) {
+		beforeNode(node);
 		if (this._depth_first) {
 			onPushLevel();
 			for (Node child : node.getChilds()) {
-				this.visit(child);
+				this._visit(child);
 			}
 			onPopLevel();
 			this.onNode(node);
@@ -20,16 +27,29 @@ public abstract class AbstractVisitor {
 			this.onNode(node);
 			onPushLevel();
 			for (Node child : node.getChilds()) {
-				this.visit(child);
+				this._visit(child);
 			}
 			onPopLevel();
 		}
+		afterNode(node);
+	}
+
+	protected void beforeNode(Node node) {
+	}
+
+	protected void afterNode(Node node) {
 	}
 
 	protected void onPushLevel() {
 	}
 
 	protected void onPopLevel() {
+	}
+
+	protected void onVisitStart(Node node) {
+	}
+
+	protected void onVisitEnd() {
 	}
 
 	protected abstract void onNode(Node node);
