@@ -51,6 +51,21 @@ public class Node {
 		return (_parent != null && _parent.getChilds().lastIndexOf(this) == _parent.getChilds().size() - 1);
 	}
 
+	public Node asSubTree() {
+		if (isRoot()) {
+			return this;
+		}
+
+		Node newRoot = new Node(_type);
+
+		for (Node child : _childs) {
+			@SuppressWarnings("unused")
+			Node newSubNode = new Node(child.getType(), newRoot);
+		}
+
+		return newRoot;
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + "[" + _childs.size() + " childs]";

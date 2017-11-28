@@ -2,9 +2,11 @@ package com.test.signature;
 
 public class Token {
 	private String _chars;
+	private boolean _java_source_format;
 
-	public Token(String chars) {
+	public Token(String chars, boolean java_source_format) {
 		_chars = chars;
+		_java_source_format = java_source_format;
 	}
 
 	public String getChars() {
@@ -16,7 +18,11 @@ public class Token {
 	}
 
 	public boolean isGenericSeparator() {
-		return _chars.equals(";");
+		if (_java_source_format) {
+			return _chars.equals(",");
+		} else {
+			return _chars.equals(";");
+		}
 	}
 
 	public boolean isGenericStart() {

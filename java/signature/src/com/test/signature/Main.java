@@ -9,13 +9,13 @@ public final class Main {
 			TypeNameCleaner cleaner = new TypeNameCleaner();
 			TreePrinter printer = new TreePrinter();
 
-			Node root = parser.parse("QFutureTask<[QFont;>");
-			root = parser.parse("QHashMap<QString;[QString;>");
+			Node root = parser.parse("QFutureTask<[QFont;>", false);
+			root = parser.parse("QHashMap<QString;[QString;>", false);
 
-			root = parser.parse("QHashMap<QString;QSet<QEnum;>;>");
+			root = parser.parse("QHashMap<QString;QSet<QEnum;>;>", false);
 			printer.visit(root);
 
-			root = parser.parse("QArrayList<QArrayList<QPoint2D.Double;>;>");
+			root = parser.parse("QArrayList<QArrayList<QPoint2D.Double;>;>", false);
 			printer.visit(root);
 			cleaner.visit(root);
 			printer.visit(root);

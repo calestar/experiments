@@ -6,13 +6,16 @@ import java.util.List;
 public class Input {
 	private List<Token> _tokens;
 	private int _index;
+	private boolean _java_source_format;
 
-	public Input(String input) {
-		this._tokens = tokenize(input);
+	public Input(String input, boolean java_source_format) {
 		this._index = 0;
+		this._java_source_format = java_source_format;
+
+		this._tokens = tokenize(input);
 	}
 
-	private static List<Token> tokenize(String input) {
+	private List<Token> tokenize(String input) {
 		List<Token> result = new ArrayList<Token>();
 
 		String token = "";
@@ -27,13 +30,18 @@ public class Input {
 			} else {
 				// If we already remembered something from previous iterations, push
 				if (!token.equals("")) {
-					result.add(new Token(token));
+					result.add(new Token(token, this._java_source_format));
 					token = "";
 				}
 
 				// Push the stop character
-				result.add(new Token(current));
+				result.add(new Token(current, this._java_source_format));
 			}
+		}
+
+		// Make sure we add any remaining stuff in the buffer
+		if (!token.equals("")) {
+			result.add(new Token(token, this._java_source_format));
 		}
 
 		return result;
@@ -44,7 +52,10 @@ public class Input {
 	}
 
 	public Token peek() {
-		return this._tokens.get(this._index);
+		if (hasData()) {
+			return this._tokens.get(this._index);
+		}
+		return null;
 	}
 
 	public Token consume() {

@@ -26,4 +26,8 @@ public class Type {
 	public void updateTypeName(String new_typename) {
 		_typename = new_typename;
 	}
+
+	public boolean isResolved() {
+		return _typename.charAt(0) != 'Q';
+	}
 }

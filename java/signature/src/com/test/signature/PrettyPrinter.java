@@ -3,14 +3,24 @@ package com.test.signature;
 public class PrettyPrinter extends AbstractVisitor {
 
 	private String _output;
+	private boolean _clean_output;
 
-	public PrettyPrinter() {
+	public PrettyPrinter(boolean clean_output) {
 		super(false);
+		_clean_output = clean_output;
 	}
 
 	@Override
 	protected void onNode(Node node) {
-		_output += node.getType().getTypename();
+		String typename = node.getType().getTypename();
+
+		if (_clean_output) {
+			if (!typename.equals("") && typename.charAt(0) == 'Q') {
+				typename = typename.substring(1);
+			}
+		}
+
+		_output += typename;
 	}
 
 	@Override

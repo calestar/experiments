@@ -42,4 +42,18 @@ class TypeTests {
 		type.updateTypeName("oops");
 		assertEquals("oops", type.getTypename());
 	}
+
+	@Test
+	void test_resolved() {
+		Type type = new Type("test");
+		assertEquals("test", type.getTypename());
+		assertTrue(type.isResolved());
+	}
+
+	@Test
+	void test_not_resolved() {
+		Type type = new Type("Qtest");
+		assertEquals("Qtest", type.getTypename());
+		assertFalse(type.isResolved());
+	}
 }

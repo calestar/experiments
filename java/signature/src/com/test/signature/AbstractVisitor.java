@@ -8,13 +8,13 @@ public abstract class AbstractVisitor {
 		this._depth_first = depth_first;
 	}
 
-	public void visit(Node node) {
+	public void visit(Node node) throws Exception {
 		onVisitStart(node);
 		_visit(node);
 		onVisitEnd();
 	}
 
-	private void _visit(Node node) {
+	private void _visit(Node node) throws Exception {
 		beforeNode(node);
 		if (this._depth_first) {
 			onPushLevel();
@@ -52,5 +52,5 @@ public abstract class AbstractVisitor {
 	protected void onVisitEnd() {
 	}
 
-	protected abstract void onNode(Node node);
+	protected abstract void onNode(Node node) throws Exception;
 }

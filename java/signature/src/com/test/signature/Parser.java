@@ -71,6 +71,9 @@ public class Parser {
 			} else if (next_token.isGenericSeparator()) {
 				// Simply ignore, it'll be handled somewhere else
 				// assuming correct format
+			} else if (next_token.isGenericStop()) {
+				// Simply ignore, it'll be handled somewhere else
+				// assuming correct format
 			} else {
 				throw new Exception("Unexpected token after type");
 			}
@@ -80,9 +83,9 @@ public class Parser {
 		return current;
 	}
 
-	public Node parse(String string) throws Exception {
+	public Node parse(String string, boolean java_source_format) throws Exception {
 		// Tokenize the input
-		Input input = new Input(string);
+		Input input = new Input(string, java_source_format);
 
 		// Take the first token, assume its a type and create the root node
 		Node root = parseType(input, null);
