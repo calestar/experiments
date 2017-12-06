@@ -22,7 +22,7 @@ public class TypeResolver extends AbstractVisitor {
 		Node subtree = node.asSubTree();
 
 		// Get the *full* name of the sub-tree by pretty-printing it (and cleaning it)
-		PrettyPrinter printer = new PrettyPrinter(true);
+		PrettyPrinter printer = new PrettyPrinter(true, false);
 		printer.visit(subtree);
 		String full_name = printer.getOutput();
 

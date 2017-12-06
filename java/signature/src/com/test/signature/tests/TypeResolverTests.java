@@ -19,7 +19,7 @@ public class TypeResolverTests {
 		TypeContext context = new TypeContext();
 		context.register("String", "java.lang");
 		TypeResolver resolver = new TypeResolver(context);
-		PrettyPrinter printer = new PrettyPrinter(false);
+		PrettyPrinter printer = new PrettyPrinter(false, false);
 
 		Parser parser = new Parser();
 		try {
@@ -43,7 +43,7 @@ public class TypeResolverTests {
 		TypeContext context = new TypeContext();
 		context.register("String", "java.lang");
 		TypeResolver resolver = new TypeResolver(context);
-		PrettyPrinter printer = new PrettyPrinter(false);
+		PrettyPrinter printer = new PrettyPrinter(false, false);
 
 		Parser parser = new Parser();
 		try {
@@ -67,7 +67,7 @@ public class TypeResolverTests {
 		context.register("String", "java.lang");
 		context.register("ArrayList<java.lang.String>", "java.lang");
 		TypeResolver resolver = new TypeResolver(context);
-		PrettyPrinter printer = new PrettyPrinter(false);
+		PrettyPrinter printer = new PrettyPrinter(false, false);
 
 		Parser parser = new Parser();
 		try {
@@ -91,7 +91,7 @@ public class TypeResolverTests {
 		TypeContext context = new TypeContext();
 		context.register("String", "java.lang");
 		TypeResolver resolver = new TypeResolver(context);
-		PrettyPrinter printer = new PrettyPrinter(false);
+		PrettyPrinter printer = new PrettyPrinter(false, false);
 
 		Parser parser = new Parser();
 		try {
@@ -115,7 +115,7 @@ public class TypeResolverTests {
 		TypeContext context = new TypeContext();
 		context.register("ArrayList<java.lang.String>", "java.lang");
 		TypeResolver resolver = new TypeResolver(context);
-		PrettyPrinter printer = new PrettyPrinter(false);
+		PrettyPrinter printer = new PrettyPrinter(false, false);
 
 		Parser parser = new Parser();
 		try {
@@ -140,7 +140,7 @@ public class TypeResolverTests {
 		context.register("String", "java.lang");
 		context.register("HashSet<java.lang.String,java.lang.String>", "java.lang");
 		TypeResolver resolver = new TypeResolver(context);
-		PrettyPrinter printer = new PrettyPrinter(false);
+		PrettyPrinter printer = new PrettyPrinter(false, false);
 
 		Parser parser = new Parser();
 		try {

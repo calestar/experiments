@@ -4,10 +4,12 @@ public class PrettyPrinter extends AbstractVisitor {
 
 	private String _output;
 	private boolean _clean_output;
+	private boolean _output_signature_format;
 
-	public PrettyPrinter(boolean clean_output) {
+	public PrettyPrinter(boolean clean_output, boolean output_signature_format) {
 		super(false);
 		_clean_output = clean_output;
+		_output_signature_format = output_signature_format;
 	}
 
 	@Override
@@ -30,7 +32,11 @@ public class PrettyPrinter extends AbstractVisitor {
 			if (node.isParentFirstChild()) {
 				_output += "<";
 			} else {
-				_output += ",";
+				if (_output_signature_format) {
+					_output += ";";
+				} else {
+					_output += ",";
+				}
 			}
 		}
 	}
@@ -39,7 +45,11 @@ public class PrettyPrinter extends AbstractVisitor {
 	protected void afterNode(Node node) {
 		Node parent = node.getParent();
 		if (parent != null && node.isParentLastChild()) {
-			_output += ">";
+			if (_output_signature_format) {
+				_output += ";>";
+			} else {
+				_output += ">";
+			}
 		}
 	}
 
