@@ -67,6 +67,33 @@ class Node(object):
   def find_parent(self, nodeid):
     return self._parents.get(nodeid, None)
 
+  def output(self, processed, indent=''):
+    lines = [
+      "{}{}{}".format(
+        indent,
+        "->" if indent else "",
+        self.nodeid(),
+      )
+    ]
+
+    for childid in self._childs:
+      if childid not in processed:
+        processed.add(childid)
+        lines.extend(
+          self._childs[childid].output(
+            processed,
+            "  " + indent,
+          )
+        )
+      else:
+        lines.append(
+          "{}  ->{}[...]".format(
+            indent,
+            childid,
+          )
+        )
+
+    return lines
 
 class BuildContext(object):
   def __init__(self, graph):
@@ -106,6 +133,14 @@ class Graph(object):
     self._roots = {}
     self._tails = {}
     self._context = None
+
+  def output(self):
+    lines = []
+    processed = set()
+    for root in self._roots.itervalues():
+      lines.extend(root.output(processed))
+
+    return "\n".join(lines)
 
   def nodes(self):
     return self._nodes

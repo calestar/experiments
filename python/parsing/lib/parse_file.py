@@ -54,3 +54,7 @@ print (" -> Found {} nodes in common between both files".format(stats['nb_nodes_
 print (" -> Found {} common nodes with a difference in parents definition".format(len(different_parents)))
 print (" -> Found {} common nodes with a difference in childs definition".format(len(different_childs)))
 
+# Write result file ...
+output = open("{}.out".format(file_path), "w")
+output.write(purged_graph.output())
+output.close()
