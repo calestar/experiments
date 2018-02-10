@@ -1,4 +1,5 @@
 
+from collections import deque
 
 class Node(object):
   def __init__(self, nodeid, extent=None, intent=None):
@@ -103,17 +104,7 @@ class Graph(object):
   def tails(self):
     return self._tails
 
-  def build(self, parser, file, skip_until=None):
-    self._context = BuildContext(self)
-
-    # Build the graph
-    stats = parser.parse_file(
-      file,
-      skip_until=skip_until,
-      on_parsed_line=self.on_parsed_line,
-    )
-
-    # Extract some stuff ...
+  def build_stats(self):
     self._roots = {
       node.nodeid(): node
       for node in self._nodes.itervalues()
@@ -125,6 +116,17 @@ class Graph(object):
       if not node.childs()
     }
 
+  def build(self, parser, file, skip_until=None):
+    self._context = BuildContext(self)
+
+    # Build the graph
+    stats = parser.parse_file(
+      file,
+      skip_until=skip_until,
+      on_parsed_line=self.on_parsed_line,
+    )
+
+    self.build_stats()
     stats.update({
       'nb_nodes': len(self._nodes),
       'nb_roots': len(self._roots),
@@ -151,6 +153,41 @@ class Graph(object):
 
   def on_parsed_feature(self, indent, content):
     pass
+
+  def purge(self, selector):
+    stats = dict()
+    done = set()
+    todo = deque()
+    new_graph = Graph()
+
+    # Start at the roots
+    for root in self.roots():
+      todo.append((root, None))
+
+    # Work as long as there is work
+    while todo:
+      nodeid, parentid = todo.popleft()
+      node = self.find_node(nodeid)
+      done.add(nodeid)
+
+      if selector(node):
+        new_node = Node(nodeid)
+        if parentid:
+          parent = new_graph.find_node(parentid)
+          Node.link(parent, new_node)
+        new_graph._nodes[nodeid] = new_node
+        for childid in node.childs().iterkeys():
+          if childid not in done:
+            todo.append((childid, nodeid))
+          else:
+            child = new_graph.find_node(childid)
+            if child:
+              Node.link(new_node, child)
+
+    new_graph.build_stats()
+    stats.update({
+    })
+    return new_graph, stats
 
   @staticmethod
   def compare(before, after, on_difference):
