@@ -30,7 +30,7 @@ finally:
 
 # Purge for fun
 def selector(node):
-  return node.nodeid() != "NODE_2052860666_-820743363"
+  return node.has_feature('adhoc') or node.is_root()
 
 print ("Purging ...")
 purged_graph, stats = graph.purge(selector)

@@ -10,6 +10,9 @@ echo "-------------------------------------------"
 python parse_file.py ${cwd}/before.txt || true
 
 echo "-------------------------------------------"
+python parse_file.py ${cwd}/after.txt || true
+
+echo "-------------------------------------------"
 python compare_files.py ${cwd}/before.txt ${cwd}/after.txt || true
 
 popd

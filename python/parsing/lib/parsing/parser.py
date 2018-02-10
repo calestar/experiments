@@ -128,7 +128,7 @@ class Parser(object):
     nb_parsed = 0
     nb_skipped = 0
     try:
-      for line in file:
+      for linenb, line in enumerate(file, start=1):
         # Clean end of line chars
         line = line.rstrip()
 
@@ -149,7 +149,7 @@ class Parser(object):
             if on_parsed_line:
               on_parsed_line(indent, content)
     except:
-      print("Error while processing '{}'".format(line))
+      print("Error while processing line #{}: '{}'".format(linenb, line))
       raise
 
     stats = {

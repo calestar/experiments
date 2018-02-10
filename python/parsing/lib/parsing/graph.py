@@ -8,6 +8,7 @@ class Node(object):
     self._intent = intent
     self._parents = {}
     self._childs = {}
+    self._features = set()
 
   @staticmethod
   def link(parent, child):
@@ -22,6 +23,7 @@ class Node(object):
         self._nodeid == other._nodeid,
         self._parents.keys() == other._parents.keys(),
         self._childs.keys() == other._childs.keys(),
+        self._features == other._features,
       ])
     return NotImplemented
 
@@ -39,6 +41,19 @@ class Node(object):
 
   def nodeid(self):
     return self._nodeid
+
+  def features(self):
+    return self._features
+
+  def is_root(self):
+    return not self._parents
+
+  def has_feature(self, feature):
+    return feature in self._features
+
+  def add_feature(self, feature):
+    assert not self.has_feature(feature)
+    self._features.add(feature)
 
   def has_child(self, nodeid):
     return self.find_child(nodeid) != None
@@ -152,7 +167,9 @@ class Graph(object):
     self._context.enter(node)
 
   def on_parsed_feature(self, indent, content):
-    pass
+    if 'adhoc' in content.features():
+      current_node = self._context._stack[-1]
+      current_node.add_feature('adhoc')
 
   def purge(self, selector):
     stats = dict()

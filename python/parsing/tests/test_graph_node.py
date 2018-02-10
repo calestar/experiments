@@ -72,3 +72,14 @@ class NodeTests(unittest.TestCase):
     self.assertNodeNotEqual(node1, node2)
     self.assertNodeNotEqual(child1, child2)
 
+  def test_feature(self):
+    node = Node('x')
+    self.assertFalse(node.has_feature('bloop'))
+    node.add_feature('bloop')
+    self.assertTrue(node.has_feature('bloop'))
+
+    with self.assertRaises(AssertionError):
+      node.add_feature('bloop')
+
+    self.assertTrue(node.has_feature('bloop'))
+
