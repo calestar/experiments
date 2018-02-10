@@ -7,9 +7,6 @@ cd ${cwd}/lib
 nosetests --no-byte-compile ../tests
 
 echo "-------------------------------------------"
-python process_file.py ${cwd}/before.txt || true
-
-echo "-------------------------------------------"
-python process_file.py ${cwd}/after.txt || true
+python compare_files.py ${cwd}/before.txt ${cwd}/after.txt || true
 
 popd

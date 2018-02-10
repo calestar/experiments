@@ -15,6 +15,21 @@ class Node(object):
     parent._childs[child.nodeid()] = child
     child._parents[parent.nodeid()] = parent
 
+  def __eq__(self, other):
+    if isinstance(other, Node):
+      return all([
+        self._nodeid == other._nodeid,
+        self._parents.keys() == other._parents.keys(),
+        self._childs.keys() == other._childs.keys(),
+      ])
+    return NotImplemented
+
+  def __ne__(self, other):
+    result = self.__eq__(other)
+    if result is NotImplemented:
+      return result
+    return not result
+
   def parents(self):
     return self._parents
 
@@ -46,7 +61,7 @@ class BuildContext(object):
     return len(self._stack) - 1
 
   def find_node(self, nodeid):
-    return self._graph.nodes().get(nodeid, None)
+    return self._graph.find_node(nodeid)
 
   def add_or_get_node(self, nodeid):
     node = self.find_node(nodeid)
@@ -78,6 +93,9 @@ class Graph(object):
 
   def nodes(self):
     return self._nodes
+
+  def find_node(self, nodeid):
+    return self._nodes.get(nodeid, None)
 
   def roots(self):
     return self._roots
@@ -133,4 +151,54 @@ class Graph(object):
 
   def on_parsed_feature(self, indent, content):
     pass
+
+  @staticmethod
+  def compare(before, after, on_difference):
+    stats = {
+      'before' : {
+        'nb_nodes': len(before.nodes())
+      },
+      'after' : {
+        'nb_nodes': len(after.nodes())
+      }
+    }
+
+    nodes_before = set(before.nodes().keys())
+    nodes_after = set(after.nodes().keys())
+
+    only_before = nodes_before.difference(nodes_after)
+    only_after = nodes_after.difference(nodes_before)
+    common = nodes_before.intersection(nodes_after)
+    equal_nodes = set()
+
+    for nodeid in common:
+      node_before = before.find_node(nodeid)
+      node_after = after.find_node(nodeid)
+
+      if node_before == node_after:
+        equal_nodes.add(nodeid)
+      else:
+        on_difference(nodeid, node_before, node_after)
+
+    stats.update({
+      'nb_nodes_only_before': len(only_before),
+      'nb_nodes_only_after': len(only_after),
+      'nb_nodes_in_common': len(common),
+      'nb_nodes_equal': len(equal_nodes),
+    })
+    return (
+      stats,
+      {
+        nodeid: before.find_node(nodeid)
+        for nodeid in only_before
+      },
+      {
+        nodeid: after.find_node(nodeid)
+        for nodeid in only_after
+      },
+      {
+        nodeid: after.find_node(nodeid)
+        for nodeid in equal_nodes
+      },
+    )
 
