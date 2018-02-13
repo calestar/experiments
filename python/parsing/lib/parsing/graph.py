@@ -12,8 +12,8 @@ class Node(object):
 
   @staticmethod
   def link(parent, child):
-    assert not parent.has_child(child)
-    assert not child.has_parent(parent)
+    assert not parent.has_child(child.nodeid())
+    assert not child.has_parent(parent.nodeid())
     parent._childs[child.nodeid()] = child
     child._parents[parent.nodeid()] = parent
 
@@ -220,6 +220,13 @@ class Graph(object):
     while todo:
       nodeid, parentid = todo.popleft()
       node = self.find_node(nodeid)
+
+      if nodeid in done:
+        if parentid and not node.has_parent(parentid):
+          parent = new_graph.find_node(parentid)
+          Node.link(parent, node)
+        continue
+
       done.add(nodeid)
 
       if selector(node):
