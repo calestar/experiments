@@ -1,0 +1,19 @@
+# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE.txt
+# frozen_string_literal: true
+require 'rake/extensiontask'
+require 'rubygems/package_task'
+
+
+Rake::ExtensionTask.new 'nci_native' do |ext|
+  ext.lib_dir = 'lib/nci_native'
+end
+
+spec = eval(File.read('nci.gemspec'))
+Gem::PackageTask.new(spec) do end
+
+# Sanity check
+task test: %w[compile] do
+  ruby '-Ilib', '-rnci', 'tests/sanity.rb'
+end
+
+task default: :test
