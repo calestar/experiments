@@ -1,3 +1,4 @@
+# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
 
 import sys
 
@@ -80,4 +81,3 @@ print ("Found {} nodes only in the second file".format(stats['nb_nodes_only_afte
 print ("Found {} nodes in common between both files".format(stats['nb_nodes_in_common']))
 print ("Found {} common nodes with a difference in parents definition".format(len(different_parents)))
 print ("Found {} common nodes with a difference in childs definition".format(len(different_childs)))
-

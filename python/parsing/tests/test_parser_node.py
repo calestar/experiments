@@ -1,3 +1,5 @@
+# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
+
 from . import core
 
 from parsing.parser import (
@@ -61,4 +63,3 @@ class NodeLineParserTests(unittest.TestCase):
     self.assertEqual('elipsis', node.role())
     self.assertEqual('node', node.line_type())
     self.assertEqual('NODE_1952482365_2914[...,...]', node.line())
-

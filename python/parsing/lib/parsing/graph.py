@@ -1,3 +1,4 @@
+# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
 
 from collections import deque
 
@@ -297,4 +298,3 @@ class Graph(object):
         for nodeid in equal_nodes
       },
     )
-

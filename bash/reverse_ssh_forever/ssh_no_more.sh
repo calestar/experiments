@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE.txt
+# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
 
 killTunnel() {
   ssh -S $SSHF_CONTROL_SOCKET -O exit $SSHF_REMOTE_USERNAME@$SSHF_REMOTE_SERVER

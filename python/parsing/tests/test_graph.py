@@ -1,3 +1,5 @@
+# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
+
 from . import core
 
 from parsing.parser import Parser
@@ -67,4 +69,3 @@ class GraphTests(unittest.TestCase):
     self.assertEqual(3, len(graph.nodes()))
     self.assertEqual(2, len(graph.roots()))
     self.assertEqual(1, len(graph.tails()))
-

@@ -1,3 +1,4 @@
+# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
 
 import re as regex
 
@@ -158,4 +159,3 @@ class Parser(object):
       'nb_skipped': nb_skipped,
     }
     return stats
-

@@ -1,3 +1,5 @@
+# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
+
 from . import core
 
 from parsing.parser import (
@@ -51,4 +53,3 @@ class BasicParserTests(unittest.TestCase):
     parser.parse_file(lines, on_parsed_line=on_parsed_line)
 
     self.assertEqual(["FEATURE TYPE:  ## ADHOC"], parsed_lines)
-

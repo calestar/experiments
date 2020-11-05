@@ -1,6 +1,8 @@
+# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
+
 from . import core
 
-from parsing.graph import Node 
+from parsing.graph import Node
 
 import unittest
 
@@ -82,4 +84,3 @@ class NodeTests(unittest.TestCase):
       node.add_feature('bloop')
 
     self.assertTrue(node.has_feature('bloop'))
-

@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE.txt
+# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
 
 createTunnel() {
   ssh -R $SSHF_TUNNEL_REMOTE_PORT:localhost:$SSHF_TUNNEL_LOCAL_PORT -S $SSHF_CONTROL_SOCKET -M -fN $SSHF_REMOTE_USERNAME@$SSHF_REMOTE_SERVER
