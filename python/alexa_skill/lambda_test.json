@@ -1,0 +1,18 @@
+{
+    "request": {
+        "intent": {
+            "name": "RunCommand",
+            "slots": {
+                "command": {
+                    "value": "bloop",
+                    "confirmationStatus": "NONE",
+                    "source": "USER",
+                    "slotValue": {
+                        "type": "Simple",
+                        "value": "bloop"
+                    }
+                }
+            }
+        }
+    }
+}
