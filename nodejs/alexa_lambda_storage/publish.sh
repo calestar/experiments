@@ -13,8 +13,8 @@ if [[ "x$MY_LAMBDA_ARN" == "xARN_VALUE_FROM_LAMBDA" ]]; then
     exit -1
 fi
 
-npm install
-zip -r package.zip lambda.js node_modules 2>&1 > /dev/null
+rm package.zip 2>&1 > /dev/null || true
+zip -r package.zip lambda.js 2>&1 > /dev/null
 
 aws lambda update-function-code \
     --function-name  $MY_LAMBDA_ARN \
