@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Jean-Sebastien Gelinas, see LICENSE.txt
+# Copyright (c) 2020, 2021 Jean-Sebastien Gelinas, see LICENSE.txt
 # frozen_string_literal: true
 
 Gem::Specification.new 'ncipp', '0.1' do |s|
