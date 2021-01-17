@@ -1,0 +1,20 @@
+{
+  "name": "nci",
+  "version": "1.0.0",
+  "description": "Sample Native C Interface (NCI)",
+  "main": "index.js",
+  "directories": {
+    "csrc": "csrc"
+  },
+  "scripts": {
+    "test": "node test.js",
+    "build": "node-gyp rebuild",
+    "install": "node-gyp rebuild"
+  },
+  "author": "Jean-Sebastien Gelinas",
+  "license": "MIT",
+  "gypfile": true,
+  "dependencies": {
+    "bindings": "^1.5.0"
+  }
+}

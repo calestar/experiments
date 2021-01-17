@@ -1,0 +1,14 @@
+{
+  "name": "nci_test",
+  "version": "1.0.0",
+  "description": "Sample Native C Interface (NCI) test",
+  "main": "test.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "Jean-Sebastien Gelinas",
+  "license": "MIT",
+  "dependencies": {
+    "nci": "../native"
+  }
+}
