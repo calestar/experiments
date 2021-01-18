@@ -147,6 +147,7 @@ napi_value nci_constructor(napi_env env, napi_callback_info info) {
         napi_value js_nci_native_device_get_whatever;
         napi_value js_nci_native_device_open_file;
 
+        // Get, and validate, the argument (we require an int)
         NODE_API_CALL(
             napi_get_cb_info(env, info, &argcount, args, &jsthis, NULL),
             "Could not get call info"
@@ -161,6 +162,7 @@ napi_value nci_constructor(napi_env env, napi_callback_info info) {
             "Could not get int32_t value from first argument"
         );
 
+        // Create and wrap the native instance
         nci_native_device_struct* obj = new_nci_native_device(value);
 
         NODE_API_CALL(
@@ -168,6 +170,7 @@ napi_value nci_constructor(napi_env env, napi_callback_info info) {
             "Could not wrap native device"
         );
 
+        // Register the functions on the instance
         NODE_API_CALL(
             napi_create_function(
                 env,
@@ -211,19 +214,15 @@ napi_value nci_constructor(napi_env env, napi_callback_info info) {
 napi_value Init(napi_env env, napi_value exports) {
     napi_status status;
     napi_value nci_class;
-    napi_value js_nci_class_name;
     trace();
 
-    NODE_API_CALL(
-        napi_create_string_utf8(env, NCI_CLASS_NAME, NCI_CLASS_NAME_LENGTH, &js_nci_class_name),
-        "Could not wrap class name"
-    );
-
+    // Define NCINativeDevice
     NODE_API_CALL(
         napi_define_class(env, NCI_CLASS_NAME, NCI_CLASS_NAME_LENGTH, nci_constructor, NULL, 0, NULL, &nci_class),
         "Could not define class"
     );
 
+    // Export NCINativeDevice
     NODE_API_CALL(
         napi_set_named_property(env, exports, NCI_CLASS_NAME, nci_class),
         "Could not export class"
