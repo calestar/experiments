@@ -1,0 +1,10 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "alexa-sam"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-82h2zhpjbnhe"
+s3_prefix = "alexa-sam"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
