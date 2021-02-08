@@ -1,0 +1,19 @@
+{
+  "name": "alexa_lambda_storage",
+  "version": "1.0.0",
+  "description": "Simple project to play with storage during Alexa-based lambda execution",
+  "main": "src/lambda.js",
+  "repository": "https://github.com/calestar/experiments",
+  "author": "Jean-Sebastien Gelinas",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.815.0",
+    "ask-sdk-core": "^2.10.0",
+    "ask-sdk-model": "^1.29.0"
+  },
+  "scripts": {
+    "test": "echo 'No tests here!'"
+  },
+  "devDependencies": {
+  }
+}

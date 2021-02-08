@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Playing with a older example of mine, migrating it to SAM
+Globals:
+  Function:
+    Timeout: 3
+
+Mappings:
+    Variables:
+        AlexaSkillKit:
+            Id: amzn1.ask.skill.XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+        FunctionRole:
+            Id: arn:aws:iam::ACCOUNT-ID:role/Alexa-Sam-execution-role
+
+Resources:
+  StorageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !FindInMap
+        - Variables
+        - FunctionRole
+        - Id
+      CodeUri: storage/
+      Handler: src/app.handler
+      Runtime: nodejs12.x
+      Description:  Playing with a older example of mine, migrating it to SAM
+      FunctionName: 'storage-function'
+  StorageFunctionLogGroup:
+      Type: AWS::Logs::LogGroup
+      DependsOn:
+        - StorageFunction
+      Properties:
+        LogGroupName: '/aws/lambda/storage-function'
+        RetentionInDays: 3
+  StorageFunctionAlexaSkillEventPermission:
+      Type: AWS::Lambda::Permission
+      DependsOn: StorageFunction
+      Properties:
+          Action: lambda:InvokeFunction
+          EventSourceToken: !FindInMap
+              - Variables
+              - AlexaSkillKit
+              - Id
+          FunctionName: !GetAtt StorageFunction.Arn
+          Principal: alexa-appkit.amazon.com
+
+Outputs:
+  StorageFunction:
+    Description: "Storage Lambda Function ARN"
+    Value: !GetAtt StorageFunction.Arn
+  StorageFunctionAlexaSkillEventPermission:
+      Description: "Alexa Skill Lambda Invokation Permissions"
+      Value: !FindInMap
+          - Variables
+          - AlexaSkillKit
+          - Id
