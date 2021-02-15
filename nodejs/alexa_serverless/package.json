@@ -1,0 +1,20 @@
+{
+  "name": "alexa_lambda_storage",
+  "version": "1.0.0",
+  "description": "Simple project to play with storage during Alexa-based lambda execution",
+  "main": "lambda.js",
+  "dependencies": {
+    "ask-sdk": "^2.10.0"
+  },
+  "devDependencies": {
+    "serverless": "^2.22.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "serverless deploy --region us-east-1",
+    "remove": "serverless remove --region us-east-1"
+  },
+  "author": "Jean-Sebastien Gelinas",
+  "license": "MIT",
+  "repository": "https://github.com/calestar/experiments"
+}

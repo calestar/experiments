@@ -1,0 +1,14 @@
+service: alexa-serverless
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  logRetentionInDays: 5
+
+functions:
+  storage-function:
+    handler: lambda.handler
+    events:
+      - alexaSkill: amzn1.ask.skill.xx-xx-xx-xx-xx
