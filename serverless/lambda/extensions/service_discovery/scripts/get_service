@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+// Copyright (c) 2020, 2021 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
+
+// This code is not meant to be used ... ever ... simply doing it as easy as possible to be able
+// to test the rest of the code.
+
+const AWS = require('aws-sdk');
+AWS.config.update({region: 'us-east-1'});
+
+const Dynamo = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
+const DynamoTableName = 'Services';
+
+async function main() {
+  const myArgs = process.argv.slice(2);
+  const [service, version] = myArgs;
+  console.log(`Getting service '${service}', version ${version}`);
+
+  var params = {
+    TableName: DynamoTableName,
+    Key:{
+      name: service,
+      semver: version,
+    }
+  };
+
+  const result = await Dynamo.get(params).promise();
+  const arn = result.Item.arn;
+  console.log(`ARN: '${arn}'`);
+};
+
+main()
+    .then(() => {
+        console.log('Done');
+    })
+    .catch(err => {
+        console.log('Failure:', err);
+    });

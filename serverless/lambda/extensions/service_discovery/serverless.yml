@@ -1,0 +1,62 @@
+service: discovery
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  lambdaHashingVersion: 20201221
+  logRetentionInDays: 5
+
+package:
+  individually: true
+
+resources:
+  Resources:
+    servicesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Services
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+          - AttributeName: semver
+            AttributeType: S
+        KeySchema:
+          - AttributeName: name
+            KeyType: HASH
+          - AttributeName: semver
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    servicesTableIamPolicy:
+      Type: AWS::IAM::Policy
+      DependsOn: servicesTable
+      Properties:
+        PolicyName: lambda-dynamodb
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:GetItem
+              Resource: arn:aws:dynamodb:*:*:table/Services
+        Roles:
+          - Ref: IamRoleLambdaExecution
+
+functions:
+  myService:
+    handler: lambda/index.handler
+    runtime: nodejs12.x
+    environment:
+      NEEDED_SERVICES: "users,messages==0.1.0"
+      SERVICES_FILE: "/tmp/services.json"
+    package:
+      include:
+        - lambda/**
+    memorySize: 256
+    layers:
+    - !Ref DiscoveryLambdaLayer
+
+layers:
+  discovery:
+    path: extension

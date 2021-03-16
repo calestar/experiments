@@ -1,0 +1,21 @@
+{
+  "name": "lambda_service_discovery_extension",
+  "version": "1.0.0",
+  "description": "Simple project play with lambda extensions: creating a service discovery using DDB",
+  "main": "lambda.js",
+  "scripts": {
+    "installExtensionDeps": "cd extension/service_discovery && npm ci",
+    "prepackage": "npm run installExtensionDeps",
+    "package": "serverless package",
+    "predeploy": "npm run installExtensionDeps",
+    "deploy": "serverless deploy --region us-east-1",
+    "remove": "serverless remove --region us-east-1"
+  },
+  "devDependencies": {
+    "aws-sdk": "2.860.0",
+    "serverless": "^2.22.0"
+  },
+  "author": "Jean-Sebastien Gelinas",
+  "license": "MIT",
+  "repository": "https://github.com/calestar/experiments"
+}

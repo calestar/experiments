@@ -1,0 +1,8 @@
+#!/bin/bash
+# Copyright (c) 2020, 2021 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
+
+DIR=`dirname $0`
+$DIR/add_service 'users' '1.2.3' 'arn://whatever.users/V1'
+$DIR/add_service 'users' '2.0.0' 'arn://whatever.users/v2'
+$DIR/add_service 'messages' '0.1.0' 'arn://whatever.messages/v1'
+$DIR/add_service 'messages' '1.0.0' 'arn://whatever.messages/v1'

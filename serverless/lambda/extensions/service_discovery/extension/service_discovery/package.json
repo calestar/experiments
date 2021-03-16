@@ -1,0 +1,13 @@
+{
+  "name": "service_discovery_extension",
+  "version": "1.0.0",
+  "description": "Simple project play with lambda extensions: this is the actual extension",
+  "main": "index.js",
+  "author": "Jean-Sebastien Gelinas",
+  "license": "MIT",
+  "repository": "https://github.com/calestar/experiments",
+  "dependencies": {
+    "aws-sdk": "2.860.0",
+    "node-fetch": "^2.6.1"
+  }
+}
