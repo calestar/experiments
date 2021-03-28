@@ -4,10 +4,17 @@ frameworkVersion: '2'
 provider:
   name: aws
   lambdaHashingVersion: 20201221
-  logRetentionInDays: 5
 
 package:
   individually: true
+
+plugins:
+  - serverless-core-plugin
+
+custom:
+  core:
+    skippedBuckets:
+      - mypublicassetsbucket
 
 resources:
   Resources:
@@ -42,6 +49,10 @@ resources:
               Resource: arn:aws:dynamodb:*:*:table/Services
         Roles:
           - Ref: IamRoleLambdaExecution
+    mypublicassetsbucket:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: mypublicassetsbucket
 
 functions:
   myService:
