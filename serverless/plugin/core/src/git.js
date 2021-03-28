@@ -1,3 +1,5 @@
+// Copyright (c) 2020, 2021 Jean-Sebastien Gelinas, see LICENSE at the root of the repository
+
 'use strict';
 
 const { spawnSync } = require('child_process');
@@ -40,6 +42,21 @@ function processGitData(serverless, options) {
 
   for (const [resourceName, resource] of allResourcesIn(serverless)) {
     if (resource.Type === 'AWS::Lambda::Function') {
+      if (!resource.Properties) {
+        resource.Properties = {
+          Environment: {
+            Variables: {}
+          }
+        };
+      }
+      if (!resource.Properties.Environment) {
+        resource.Properties.Environment = {
+          Variables: {}
+        };
+      }
+      if (!resource.Properties.Environment.Variables) {
+        resource.Properties.Environment.Variables = {};
+      }
       resource.Properties.Environment.Variables.GIT_BUILD_DATA = build;
       resource.Properties.Environment.Variables.DEPLOYED_BY = username;
     }
