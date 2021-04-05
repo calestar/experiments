@@ -4,9 +4,14 @@ frameworkVersion: '2'
 provider:
   name: aws
   lambdaHashingVersion: 20201221
+  deploymentBucket:
+    name: ${cf:ServerlessRoot.ServerlessDeploymentBucketArn}
 
 package:
   individually: true
+  excludeDevDependencies: false
+  exclude:
+   - node_modules/**
 
 plugins:
   - serverless-core-plugin

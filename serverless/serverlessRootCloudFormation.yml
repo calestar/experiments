@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  ServerlessDeploymentBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        !Ref ServerlessDeploymentBucket
+      PolicyDocument:
+        Statement:
+          - Action: s3:*
+            Effect: Deny
+            Principal: '*'
+            Resource:
+              - !Join
+                - ''
+                - - 'arn:'
+                  - !Ref AWS::Partition
+                  - ':s3:::'
+                  - !Ref ServerlessDeploymentBucket
+                  - '/*'
+              - !Join
+                - ''
+                - - 'arn:'
+                  - !Ref AWS::Partition
+                  - ':s3:::'
+                  - !Ref ServerlessDeploymentBucket
+            Condition:
+              Bool:
+                aws:SecureTransport: false
+Outputs:
+  ServerlessDeploymentBucketArn:
+    Value: !Join
+      - ''
+      - - !Ref ServerlessDeploymentBucket
+    Description: Bucket used with serverless deploy
